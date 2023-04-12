@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import CITIES from "./cities.json";
 
-function App() {
+const App = () => {
+  const [searchText, setSearchText] = useState("");
+
+  function SearchTextHandler(event) {
+    setSearchText(event.target.value);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" placeholder="Search city..." onChange={SearchTextHandler} />
+      {CITIES.filter((val) =>
+        val.city.toLowerCase().includes(searchText.toLowerCase())
+      ).map((val, key) => {
+        return (
+          <div className="user" key={key}>
+            <p>{val.city}</p>
+          </div>
+        );
+      })}
     </div>
   );
-}
+};
 
 export default App;
